@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/HueJack/logicasoft.cashback.svg?branch=master)](https://travis-ci.org/HueJack/logicasoft.cashback)
+
 # Битрикс: кэшбек с покупок
 
 Добавляет возможность возвращать кэшбек на внутренний счет пользователя с выполненного заказа. 
