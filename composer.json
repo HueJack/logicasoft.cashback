@@ -1,0 +1,36 @@
+{
+    "name": "logicasoft/cashback",
+    "description": "Bitrix module: Crediting a cashback to the user's internal account from the completed order",
+    "license": "MIT",
+    "keywords": [
+        "bitrix",
+        "cashback"
+    ],
+    "authors": [
+        {
+            "name": "Nikolay Meshcherinov",
+            "email": "mnikolayw@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "type": "bitrix-d7-module",
+    "autoload-dev": {
+      "psr-4": {
+        "LLC\\Tests\\": "tests/"
+      },
+      "classmap": [
+        "lib/",
+        "lib/strategy"
+      ]
+    },
+    "require": {
+      "php": ">=7.1",
+      "composer/installers": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5."
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --coverage-clover coverage.clover"
+    }
+}
