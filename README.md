@@ -48,12 +48,40 @@ Class {
     }
 }
 ```
+
+###При добавлении стратегий в список onCollectCashbackStrategies
+В параметры передается инстанцированный Logicasoft\Cashback\Strategy\Manager;
+####Добавление собственной стратегии расчета.
+Класс стратегии должен реализовывать интерфейс \Logicasoft\Cashback\Strategy\StrategyInterface
+```php
+use Bitrix\Main\Event;
+use Bitrix\Main\EventManager;
+use Logicasoft\Cashback\Strategy\Manager;
+use Logicasoft\Cashback\Strategy\RetailCalculation;
+
+$eventManager = EventManager::getInstance();
+
+$eventManager->addEventHandler(
+    'logicasoft.cashback',
+    'onCollectCashbackStrategies',
+    'llcCollectCashbackStrategies'
+);
+
+function llcCollectCashbackStrategies(Event $event)
+{
+    /** @var Manager $manager */
+    $manager = $event->getParameter('manager');
+
+    $manager->addStrategy(
+        RetailCalculation::class
+    );
+}
+```
 ## TODO:
 - добавить установку с помощью composer
 - добавить ссылку на маркетплейс
 - добавить события:
-    1. перед подсчетом событие со списком товаров с возможностью слияния изменений;
-    2. при генерации списка стратегий, чтобы разработчик мог добавить свои решения.
+    1. перед подсчетом событие со списком товаров с возможностью слияния изменений;   
 
 
 **Created by HueJack for LLC Logicasoft**
