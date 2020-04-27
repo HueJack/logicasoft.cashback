@@ -49,9 +49,9 @@ Class {
 }
 ```
 
-###При добавлении стратегий в список onCollectCashbackStrategies
+### При добавлении стратегий в список onCollectCashbackStrategies
 В параметры передается инстанцированный Logicasoft\Cashback\Strategy\Manager;
-####Добавление собственной стратегии расчета.
+#### Добавление собственной стратегии расчета.
 Класс стратегии должен реализовывать интерфейс \Logicasoft\Cashback\Strategy\StrategyInterface
 ```php
 use Bitrix\Main\Event;
