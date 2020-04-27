@@ -8,6 +8,7 @@ use Bitrix\Main\Event;
 use Bitrix\Main\EventManager;
 use Logicasoft\Cashback\Strategy\Manager;
 use Logicasoft\Cashback\Strategy\MarginCalculation;
+use Logicasoft\Cashback\Strategy\RetailCalculation;
 
 $moduleName = 'logicasoft.cashback';
 
@@ -23,5 +24,6 @@ $eventManager->send(new Event(
 ));
 
 $strategyManager->addStrategy(
-    MarginCalculation::class
+    MarginCalculation::class,
+    RetailCalculation::class
 );
