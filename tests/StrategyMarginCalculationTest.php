@@ -12,7 +12,7 @@ use Logicasoft\Cashback\Strategy\StrategyInterface;
 
 class StrategyMarginCalculationTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var StrategyInterface */
+    /** @var string */
     private $class;
 
     public function setUp()
