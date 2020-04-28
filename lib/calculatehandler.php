@@ -6,6 +6,8 @@
 
 namespace Logicasoft\Cashback;
 
+use Bitrix\Main\Event;
+use Bitrix\Main\EventResult;
 use Bitrix\Sale\BasketItem;
 use Bitrix\Sale\Order;
 use Logicasoft\Cashback\Strategy\StrategyInterface;
@@ -57,6 +59,37 @@ class CalculateHandler
     {
         if (0 == sizeof($this->basketProducts)) {
             return;
+        }
+
+        $event = new Event(
+            'logicasoft.cashback',
+            'onBeforeCashbackCalculate',
+            [
+                'orderId' => $this->order->getId(),
+                'basketProducts' => $this->basketProducts
+            ]
+        );
+        $event->send();
+        $results = $event->getResults();
+
+        /** @var \Bitrix\Main\Entity\EventResult $result */
+        foreach ($results as $result) {
+            if ($result->getType() == EventResult::SUCCESS) {
+                $modifiedFields = $result->getModified();
+                if (empty($modifiedFields) || !is_array($modifiedFields)) {
+                    continue;
+                }
+
+                foreach ($modifiedFields as $id => $item) {
+                    if (!empty($item['REMOVE_ITEM'])) {
+                        if (array_key_exists($id, $this->basketProducts)) {
+                            unset($this->basketProducts[$id]);
+                        }
+                    } else {
+                        $this->basketProducts[$id] = $item;
+                    }
+                }
+            }
         }
 
         foreach ($this->basketProducts as $product) {
