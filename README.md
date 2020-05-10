@@ -23,6 +23,60 @@
 Страница настройки доступна по адресу *Настройки/Настройка продукта/Настройки модулей/Кэшбек с покупок*.
 
 ## События
+### Перед подсчетом суммы кэшбека onBeforeCashbackCalculate
+Можно изменить состав списка продуктов, откорректировать значения полей. 
+#### Использование
+В параметры передается стандартный Bitrix\Main\Event. Список продуктов лежит в параметр basketProducts
+```php
+\Bitrix\Main\EventManager::getInstance()->addEventHandler(
+  'logicasoft.cashback',
+  'onBeforeCashbackCalculate', 
+  [
+    'Class',
+    'Method'
+  ]
+);
+Class {
+    public static function Method(\Bitrix\Main\Event $event) 
+    {
+        
+        $basketProducts = $event->getParameter('basketProducts');
+        
+        //Для изменения нужно передать в функцию $result->mofidyFields();
+        //массив ключами которого будут id продукта.
+        $modifyFields = [];
+        foreach ($basketProducts as $id => $item) {
+            $modifyFields[$id] = [
+                'QUANTITY' => 100, //Изменяем количество продуктов
+                'NEW_FIELD' => 'VALUES' //Новое поле в продуктах
+            ];
+        }
+        
+        //Добавляем новый продукт в список с id = 100, 
+        //нужно учитывать, что в продукте должны быть необходимые для расчета поля
+        //Проверка происходит в стратегиях подсчета, к примеру
+        //\Logicasoft\Cashback\Strategy\RetailCalculation::checkFields() - ищет поля
+        //PRICE и QUANTITY
+        $modifyFields['100'] = [
+            'QUANTITY_ID' => 500,
+            'ID' => 200
+        ];
+    
+        $result = new \Bitrix\Main\Entity\EventResult();
+    
+        $result->modifyFields($modifyFields);
+    
+        //Если нужно удалить продукт из списка, то передаем массив с id продуктов в функцию
+        //$result->unsetField();
+        //Удалим из списка продукт с id=100
+        $result->unsetFields([100]);
+        
+        return $result;
+    }
+}
+```
+ 
+
 ### После добавлении кэшбека onAfterCashbackAdd
 В параметрах события передаются следующие данные:
 - CASHBACK_AMOUNT - размер кэшбека
