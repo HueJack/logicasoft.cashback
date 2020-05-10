@@ -74,19 +74,30 @@ class CalculateHandler
 
         /** @var \Bitrix\Main\Entity\EventResult $result */
         foreach ($results as $result) {
+            if (!($result instanceof EventResult)) {
+                continue;
+            }
+
             if ($result->getType() == EventResult::SUCCESS) {
-                $modifiedFields = $result->getModified();
-                if (empty($modifiedFields) || !is_array($modifiedFields)) {
-                    continue;
+                $modifiedProducts = $result->getModified();
+                if (is_array($modifiedProducts) && sizeof($modifiedProducts)) {
+                    foreach ($modifiedProducts as $id => $item) {
+                        if (array_key_exists($id, $this->basketProducts)) {
+                            $this->basketProducts[$id] = array_merge($this->basketProducts[$id], $item);
+                        } else {
+                            $this->basketProducts[$id] = $item;
+                        }
+                    }
                 }
 
-                foreach ($modifiedFields as $id => $item) {
-                    if (!empty($item['REMOVE_ITEM'])) {
-                        if (array_key_exists($id, $this->basketProducts)) {
-                            unset($this->basketProducts[$id]);
+                $productsToDelete = $result->getUnset();
+                if (is_array($productsToDelete) && sizeof($productsToDelete)) {
+                    foreach ($productsToDelete as $id) {
+                        if (!array_key_exists($id, $this->basketProducts)) {
+                            continue;
                         }
-                    } else {
-                        $this->basketProducts[$id] = $item;
+
+                        unset($this->basketProducts[$id]);
                     }
                 }
             }
