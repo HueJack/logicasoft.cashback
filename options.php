@@ -40,6 +40,18 @@ $arOptions = array(
         'TYPE' => 'INT',
         'DEFAULT' => '0',
         'SORT' => '0',
+        'STEP' => 'any',
+        'VALIDATOR' => function($value) {
+            if (!is_numeric($value)) {
+                return new \Bitrix\Main\Error('Значение поля "Размер кэшбека в %" может быть только числом.');
+            }
+
+            if ($value < 0) {
+                return new \Bitrix\Main\Error('Значение поля "Размер кэшбека в %" не может быть отрицательным');
+            }
+
+            return true;
+        }
     ),
     'DONT_CASHBACK_FROM_PRODUCTS_WITH_DISCOUNT' => array(
         'GROUP' => 'MAIN',

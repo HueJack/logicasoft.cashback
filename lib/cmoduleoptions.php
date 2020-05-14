@@ -2,6 +2,8 @@
 
 namespace Logicasoft\Cashback;
 
+use Bitrix\Main\Error;
+
 class CModuleOptions
 {
 	public $arCurOptionValues = array();
@@ -11,6 +13,7 @@ class CModuleOptions
 	private $arGroups = array();
 	private $arOptions = array();
 	private $need_access_tab = false;
+	private $errors = [];
 	
 	public function __construct($module_id, $arTabs, $arGroups, $arOptions, $need_access_tab = false)
 	{
@@ -19,7 +22,7 @@ class CModuleOptions
 		$this->arGroups = $arGroups;
 		$this->arOptions = $arOptions;
 		$this->need_access_tab = $need_access_tab;
-		
+
 		if($need_access_tab)
 			$this->arTabs[] = array(
 				'DIV' => 'edit_access_tab',
@@ -47,7 +50,18 @@ class CModuleOptions
 				elseif(is_array($val))
 					$val = serialize($val);
 
-				\COption::SetOptionString($this->module_id, $opt, $val);
+                $validatorResult = true;
+				if (!empty($arOptParams['VALIDATOR']) && is_callable($arOptParams['VALIDATOR'])) {
+                    $validatorResult = call_user_func($arOptParams['VALIDATOR'], $val);
+                }
+				if ($validatorResult === true) {
+                    \COption::SetOptionString($this->module_id, $opt, $val);
+                } else {
+				    $this->errors[] =
+                        $validatorResult instanceof Error ?
+                            $validatorResult->getMessage() :
+                            (string)$validatorResult;
+                }
 			}
 		}
 	}
@@ -70,7 +84,11 @@ class CModuleOptions
 		global $APPLICATION;
 
 		$arP = array();
-		
+
+		if (sizeof($this->errors)) {
+		    \CAdminMessage::ShowMessage(implode('<br>', $this->errors));
+        }
+
 		foreach($this->arGroups as $group_id => $group_params)
 			$arP[$group_params['TAB']][$group_id] = array();
 		
@@ -177,7 +195,10 @@ class CModuleOptions
 							$arOptParams['SIZE'] = 25;
 						if(!isset($arOptParams['MAXLENGTH']))
 							$arOptParams['MAXLENGTH'] = 255;
-						$input = '<input type="'.($arOptParams['TYPE'] == 'INT' ? 'number' : 'text').'" size="'.$arOptParams['SIZE'].'" maxlength="'.$arOptParams['MAXLENGTH'].'" value="'.htmlspecialchars($val).'" name="'.htmlspecialchars($option).'" />';
+						if (!isset($arOptParams['STEP']) && $arOptParams['TYPE'] == 'INT') {
+						    $arOptParams['STEP'] = 1;
+                        }
+						$input = '<input type="'.($arOptParams['TYPE'] == 'INT' ? 'number' : 'text').'" size="'.$arOptParams['SIZE'].'" maxlength="'.$arOptParams['MAXLENGTH'].'" value="'.htmlspecialchars($val).'" name="'.htmlspecialchars($option).'" ' . (!empty($arOptParams['STEP']) ? ' step="' . $arOptParams['STEP'] . '"' : '') . '/>';
 						if($arOptParams['REFRESH'] == 'Y')
 							$input .= '<input type="submit" name="refresh" value="OK" />';
 						break;
