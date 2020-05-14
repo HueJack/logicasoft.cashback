@@ -134,8 +134,5 @@ function llcCollectCashbackStrategies(Event $event)
 ## TODO:
 - добавить установку с помощью composer
 - добавить ссылку на маркетплейс
-- добавить события:
-    1. перед подсчетом событие со списком товаров с возможностью слияния изменений;   
-
 
 **Created by HueJack for LLC Logicasoft**
