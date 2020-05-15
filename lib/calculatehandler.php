@@ -39,7 +39,7 @@ class CalculateHandler
     {
         $this->order = $order;
         $this->strategy = $strategy;
-        $this->percentCashback = \COption::GetOptionInt('logicasoft.cashback', 'PERCENT_CASHBACK', 0);
+        $this->percentCashback = \COption::GetOptionString('logicasoft.cashback', 'PERCENT_CASHBACK', 0);
 
         $this->fillProducts();
         $this->calculate();
