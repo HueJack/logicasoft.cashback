@@ -7,7 +7,7 @@ $MESS['LOGICASOFT_CASHBACK_MODULE_NAME'] = 'Кэшбек на внутренни
 $MESS['LOGICASOFT_CASHBACK_MODULE_DESC'] = 'Возвращает % от стоимости товаров в выполненном заказе на внутренний счет клиента';
 $MESS['LOGICASOFT_CASHBACK_PARTNER_NAME'] = 'LLC Logicasoft';
 $MESS['LOGICASOFT_CASHBACK_UNINSTALL_STEP_1_TITLE'] = 'Подтвердите удаление данных';
-$MESS['LOGICASOFT_CASHBACK_TYPE_EVENT_NAME'] = 'Начисления кэшбека после выполнения заказа';
+$MESS['LOGICASOFT_CASHBACK_TYPE_EVENT_TITLE'] = 'Начисления кэшбека после выполнения заказа';
 $MESS['LOGICASOFT_CASHBACK_TYPE_EMAIL_EVENT_DESCRIPTION'] = '
                 #SUM# - Сумма кэшбека
                 #EMAIL_TO# - Email клиента(из заказа),

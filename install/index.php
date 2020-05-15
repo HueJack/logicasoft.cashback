@@ -85,7 +85,7 @@ class logicasoft_cashback extends CModule
         CEventType::Add([
             'EVENT_NAME'    => self::$EMAIL_EVENT_TYPE,
             'NAME'          => GetMessage('LOGICASOFT_CASHBACK_TYPE_EVENT_TITLE'),
-            'LID'           => $site->getLid(),
+            'LID'           => SITE_ID,
             'EVENT_TYPE' => 'email',
             'DESCRIPTION'   => GetMessage('LOGICASOFT_CASHBACK_TYPE_EMAIL_EVENT_DESCRIPTION')
         ]);
@@ -135,14 +135,14 @@ class logicasoft_cashback extends CModule
 
     public static function UnInstallMailEvents()
     {
-        CEventType::Delete('LOGICASOFT_CASHBACK_ADD');
-
         if (empty($_REQUEST['savedata'])) {
+            CEventType::Delete(['EVENT_NAME' => self::$EMAIL_EVENT_TYPE]);
+            CEventType::Delete(['EVENT_NAME' => self::$SMS_EVENT_TYPE]);
+
             $eventMessages = self::getEventMessages();
             foreach ($eventMessages as $eventMessage) {
                 CEventMessage::Delete($eventMessage['ID']);
             }
-
 
             if (Loader::includeModule('messageservice')) {
                 $smsTemplates = static::getSmsTemplates();
