@@ -9,6 +9,12 @@ namespace Logicasoft\Cashback;
 
 use Bitrix\Main\Event;
 
+/**
+ * Класс предоставляет методы для добавления и отмены кэшбека
+ *
+ * Class UserCashbackHandler
+ * @package Logicasoft\Cashback
+ */
 class UserCashbackHandler
 {
     public static function addCashback(float $cashbackValue, string $currency, int $userId, int $orderId)

@@ -13,7 +13,7 @@ use Bitrix\Sale\Order;
 use Logicasoft\Cashback\Strategy\StrategyInterface;
 
 /**
- * Посчитает кэшбек для продуктов заказа
+ * Используя выбранную стратегию подсчитает размер кэшбека
  *
  * Class CalculateHandler
  * @package Logicasoft\Cashback
@@ -108,6 +108,9 @@ class CalculateHandler
         }
     }
 
+    /**
+     * Заполнит свойство объекта продуктами из корзины заказа
+     */
     private function fillProducts()
     {
         $dontCashbackFromProductsWithDiscount = \COption::GetOptionString(

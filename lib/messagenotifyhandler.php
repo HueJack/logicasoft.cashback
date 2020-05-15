@@ -15,16 +15,30 @@ use Bitrix\Main\UserPhoneAuthTable;
 use Bitrix\MessageService\Sender\SmsManager;
 use Bitrix\Sale\Order;
 
+/**
+ * Оповещение пользователя о поступлении кэшбека.
+ * В качестве email и номера телефона используются свойства заказа с установленными типами:
+ * - Использовать как E-Mail
+ * - Является телефоном
+ *
+ * Class MessageNotifyHandler
+ * @package Logicasoft\Cashback
+ */
 class MessageNotifyHandler
 {
+    /** @var float  */
     private $cashbackAmount;
 
+    /** @var string  */
     private $currency;
 
+    /** @var int  */
     private $orderId;
 
+    /** @var int  */
     private $userId;
 
+    /** @var string  */
     private $cashbackAmountFormatted;
 
     /** @var array */
@@ -36,6 +50,7 @@ class MessageNotifyHandler
     /** @var string */
     private $siteName;
 
+    /** @var  string */
     private $siteId;
 
     public function __construct(float $cashbackAmount, string $currency, int $orderId, int $userId)

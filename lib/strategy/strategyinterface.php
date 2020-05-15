@@ -8,6 +8,11 @@ namespace Logicasoft\Cashback\Strategy;
 
 interface StrategyInterface
 {
+    /**
+     * Вернет название стратегии для вывода в списке настроек модуля
+     *
+     * @return string
+     */
     public static function getTitle(): string;
 
     /**
