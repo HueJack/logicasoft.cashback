@@ -264,7 +264,6 @@ class CModuleOptions
 			
 			echo 	'<input type="hidden" name="update" value="Y" />
 					<input type="submit" name="save" value="Сохранить" />
-					<input type="reset" name="reset" value="Сбросить" />
 					</form>';
 
 			$tabControl->End();
