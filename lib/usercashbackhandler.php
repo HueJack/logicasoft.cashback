@@ -8,6 +8,7 @@
 namespace Logicasoft\Cashback;
 
 use Bitrix\Main\Event;
+use Bitrix\Main\Localization\Loc;
 
 /**
  * Класс предоставляет методы для добавления и отмены кэшбека
@@ -27,7 +28,7 @@ class UserCashbackHandler
                 [
                     'USER_ID' => $userId,
                     'CURRENCY' => $currency,
-                    'NOTE' => 'Кэшбек'
+                    'NOTE' => Loc::getMessage('LLC_CASHBACK_NOTE')
                 ]
             );
         }
@@ -77,7 +78,7 @@ class UserCashbackHandler
                 $userId,
                 -(float)$item['AMOUNT'],
                 $currency,
-                'Отмена кэшбека',
+                Loc::getMessage('LLC_CASHBACK_CANCEL_CASHBACK_DESCR'),
                 $orderId
             );
             \CSaleUserTransact::Update(

@@ -6,6 +6,8 @@
 
 namespace Logicasoft\Cashback\Strategy;
 
+use Bitrix\Main\Localization\Loc;
+
 /**
  * Расчет от маржинальности товара(розничная - закупочная(если есть))
  *
@@ -16,7 +18,7 @@ class MarginCalculation implements StrategyInterface
 {
     public static function getTitle(): string
     {
-        return 'Расчет от маржинальности товара';
+        return Loc::getMessage('LLC_CASHBACK_MARGINCALCULATION_TITLE');
     }
 
     public static function calculate(array $product, float $percent)
@@ -39,7 +41,7 @@ class MarginCalculation implements StrategyInterface
         foreach ($fields as $fieldCode) {
             if (!array_key_exists($fieldCode, $product)) {
                 throw new \InvalidArgumentException(
-                    'Ошибка! В массиве продукта отсутствуют нужные поля ' .
+                    Loc::getMessage('LLC_CASHBACK_MARGINCALCULATION_CHECK_FIELD_ERROR') .
                     print_r(['NEED_FIELDS' => $fields, 'PRODUCT' => $product], true)
                 );
             }

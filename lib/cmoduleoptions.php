@@ -3,6 +3,7 @@
 namespace Logicasoft\Cashback;
 
 use Bitrix\Main\Error;
+use Bitrix\Main\Localization\Loc;
 
 class CModuleOptions
 {
@@ -26,9 +27,9 @@ class CModuleOptions
 		if($need_access_tab)
 			$this->arTabs[] = array(
 				'DIV' => 'edit_access_tab',
-				'TAB' => 'Права доступа',
+				'TAB' => Loc::getMessage('LLC_CASHBACK_RIGHT_ACCESS_TITLE'),
 				'ICON' => '',
-				'TITLE' => 'Права доступа'
+				'TITLE' => Loc::getMessage('LLC_CASHBACK_RIGHT_ACCESS_TITLE')
 			);
 		
 		if($_REQUEST['update'] == 'Y' && check_bitrix_sessid())
@@ -263,7 +264,7 @@ class CModuleOptions
 			$tabControl->Buttons();
 			
 			echo 	'<input type="hidden" name="update" value="Y" />
-					<input type="submit" name="save" value="Сохранить" />
+					<input type="submit" name="save" value="' . Loc::getMessage('LLC_CASHBACK_SUBMIT') . '" />
 					</form>';
 
 			$tabControl->End();

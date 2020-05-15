@@ -6,11 +6,13 @@
 
 namespace Logicasoft\Cashback\Strategy;
 
+use Bitrix\Main\Localization\Loc;
+
 class RetailCalculation implements StrategyInterface
 {
     public static function getTitle(): string
     {
-        return 'Расчет от розничной';
+        return Loc::getMessage('LLC_CASHBACK_RETAILCALCULATION_TITLE');
     }
 
     public static function calculate(array $product, float $percent)
@@ -32,7 +34,7 @@ class RetailCalculation implements StrategyInterface
         foreach ($fields as $fieldCode) {
             if (!array_key_exists($fieldCode, $product)) {
                 throw new \InvalidArgumentException(
-                    'Ошибка! В массиве продукта отсутствуют нужные поля ' .
+                    Loc::getMessage('LLC_CASHBACK_RETAILCALCULATION_CHECK_FIELD_ERROR') .
                     print_r(['NEED_FIELDS' => $fields, 'PRODUCT' => $product], true)
                 );
             }
