@@ -28,7 +28,7 @@ class MessageNotifyHandler
     private $cashbackAmountFormatted;
 
     /** @var array */
-    private $userData;
+    private $userData = [];
 
     /** @var Order */
     private $order;
@@ -111,10 +111,13 @@ class MessageNotifyHandler
         $this->order = Order::load($this->orderId);
         $propertyCollection = $this->order->getPropertyCollection();
 
-        $this->userData = [
-            'EMAIL' => $propertyCollection->getUserEmail()->getValue(),
-            'PHONE_NUMBER' => UserPhoneAuthTable::normalizePhoneNumber($propertyCollection->getPhone()->getValue())
-        ];
+        if (null !== ($propertyUserEmail = $propertyCollection->getUserEmail())) {
+            $this->userData['EMAIL'] = $propertyUserEmail->getValue();
+        }
+
+        if (null !== ($propertyPhone = $propertyCollection->getPhone())) {
+            $this->userData['PHONE_NUMBER'] = $propertyPhone->getValue();
+        }
     }
 
     protected function fillCurrentSite()
