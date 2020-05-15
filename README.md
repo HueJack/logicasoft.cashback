@@ -26,14 +26,15 @@
 Страница настройки доступна по адресу *Настройки/Настройка продукта/Настройки модулей/Кэшбек на внутренний счет пользователя*.
 
 ## События
-### Перед подсчетом суммы кэшбека onBeforeCashbackCalculate
+### После получения списка продуктов из корзины заказа onAfterFillProducts
 Можно изменить состав списка продуктов, откорректировать значения полей. 
 #### Использование
-В параметры передается стандартный Bitrix\Main\Event. Список продуктов лежит в параметр basketProducts
+В параметры передается стандартный Bitrix\Main\Event. Список продуктов лежит в параметре basketProducts. Вернуть
+необходимо \Bitrix\Main\Entity\EventResult(); 
 ```php
 \Bitrix\Main\EventManager::getInstance()->addEventHandler(
   'logicasoft.cashback',
-  'onBeforeCashbackCalculate', 
+  'onAfterFillProducts', 
   [
     'Class',
     'Method'
@@ -42,7 +43,6 @@
 Class {
     public static function Method(\Bitrix\Main\Event $event) 
     {
-        
         $basketProducts = $event->getParameter('basketProducts');
         
         //Для изменения нужно передать в функцию $result->mofidyFields();
