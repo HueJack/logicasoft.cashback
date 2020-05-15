@@ -43,11 +43,11 @@ $arOptions = array(
         'STEP' => 'any',
         'VALIDATOR' => function($value) {
             if (!is_numeric($value)) {
-                return new \Bitrix\Main\Error('Значение поля "Размер кэшбека в %" может быть только числом.');
+                return new \Bitrix\Main\Error(Loc::getMessage('LLC_CASHBACK_OPTIONS_PERCENT_VALIDATOR_1'));
             }
 
             if ($value < 0) {
-                return new \Bitrix\Main\Error('Значение поля "Размер кэшбека в %" не может быть отрицательным');
+                return new \Bitrix\Main\Error(Loc::getMessage('LLC_CASHBACK_OPTIONS_PERCENT_VALIDATOR_2'));
             }
 
             return true;

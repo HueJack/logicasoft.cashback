@@ -10,3 +10,5 @@ $MESS['LLC_CASHBACK_OPTIONS_DONT_CASHBACK_FROM_PRODUCTS_WITH_DISCOUNT'] = 'Не 
 $MESS['LLC_CASHBACK_OPTIONS_STRATEGY_CALCULATION'] = 'Стратегия подсчета';
 $MESS['LLC_CASHBACK_OPTIONS_SEND_EMAIL_NOTIFICATION_ABOUT_ADDED_CASHBACK'] = 'Уведомлять клиента по Email о начисление кэшбека';
 $MESS['LLC_CASHBACK_OPTIONS_SEND_SMS_NOTIFICATION_ABOUT_ADDED_CASHBACK'] = 'Уведомлять клиента по SMS о начисление кэшбека';
+$MESS['LLC_CASHBACK_OPTIONS_PERCENT_VALIDATOR_1'] = 'Значение поля "Размер кэшбека в %" может быть только числом.';
+$MESS['LLC_CASHBACK_OPTIONS_PERCENT_VALIDATOR_2'] = 'Значение поля "Размер кэшбека в %" не может быть отрицательным';
