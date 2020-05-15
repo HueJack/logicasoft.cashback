@@ -23,7 +23,5 @@ $eventManager->send(new Event(
     ]
 ));
 
-$strategyManager->addStrategy(
-    MarginCalculation::class,
-    RetailCalculation::class
-);
+$strategyManager->addStrategy(MarginCalculation::class);
+$strategyManager->addStrategy(RetailCalculation::class);
